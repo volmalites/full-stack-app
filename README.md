@@ -7,15 +7,15 @@ Rest API application with authentication and database integration
 
 # install dependencies
 Inside both the api/ and client/ folders respectively run the following relative to these folders:
-npm install
+* npm install
 
 # Inside the api folder, serve with hot reload at localhost:5000
-cd api/
-npm start
+* cd api/
+* npm start
 
 # Inside the client folder, serve with hot reload at localhost:3000
-cd client/
-npm start
+* cd client/
+* npm start
 
 Both servers need to be running at the same time for the app to become fully functional
  
