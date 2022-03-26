@@ -20,8 +20,8 @@ const UpdateCourse = () => {
 
   const getCourse = useCallback(() => { // Use callback to prevent infinite loops, gets course to be updated
     context.data.api('/courses/' + id, 'GET', null, true, authUser.encodedCredentials).then(res => {
-      if (res.status === 500) history.push('/error', { state: { from: location } });
-      res.json();
+      if (res === 500) history.push('/error', { state: { from: location } });
+      return res.json();
     }).then(data => { 
       setDenied(data.userId !== authUser.id);
       if (data.message) {
@@ -75,13 +75,13 @@ const UpdateCourse = () => {
     history.push('/courses/' + id, { state: { from: location } });
   }
 
-  if (denied) { // If current user is not the owner
-    return (
-      Forbidden()
-    )
-  } else if (noneFound) { // If the requested course was not found
+  if (noneFound) { // If current user is not the owner
     return (
       NotFound()
+    )
+  } else if (denied) { // If the requested course was not found
+    return (
+      Forbidden()
     )
   } else {
     return (
