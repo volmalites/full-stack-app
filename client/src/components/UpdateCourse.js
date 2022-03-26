@@ -20,7 +20,7 @@ const UpdateCourse = () => {
 
   const getCourse = useCallback(() => { // Use callback to prevent infinite loops, gets course to be updated
     context.data.api('/courses/' + id, 'GET', null, true, authUser.encodedCredentials).then(res => {
-      if (res === 500) history.push('/error', { state: { from: location } });
+      if (res.status === 500) history.push('/error', { state: { from: location } });
       return res.json();
     }).then(data => { 
       setDenied(data.userId !== authUser.id);
