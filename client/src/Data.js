@@ -46,7 +46,8 @@ export default class Data {
       });
     }
     else if (response.status === 401) {
-      return null;
+      response.message = 'We could not sign you in, please reevaluate your log in credentials and try again.';
+      return response;
     }
     else {
       throw new Error();

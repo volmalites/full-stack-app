@@ -48,12 +48,13 @@ const UpdateCourse = () => {
           return res.json();
         }
       }).then(response => {
+        console.log(response);
         if (response) {
           setErrors((
             <div className="validation--errors">
               <h3>Validation Errors</h3>
                 <ul>
-                  { response.errors.map((err, index) => <li key={ index }>{ err }</li>) }
+                  { response.message.map((err, index) => <li key={ index }>{ err }</li>) }
                 </ul>
             </div>
           ));

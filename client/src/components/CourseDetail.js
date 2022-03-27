@@ -10,6 +10,7 @@ const CourseDetail = () => {
   const [errors, setErrors] = useState([]);
   const [course, loadCourse] = useState([]);
   const [courseFound, setCourseFound] = useState(false);
+  const [currentCourseOwner, setCurrentCourseOwner] = useState(false);
   const [manageCourse, setManageCourse] = useState("");
   const { id } = useParams();
   const { NotFound } = require('../components/NotFound');
@@ -47,7 +48,7 @@ const CourseDetail = () => {
   }, [authUser, context.data, id, history, location]);
 
   const manageCourses = useCallback(() => { // Use callback in order to prevent infinite loops
-    if (authUser && courseFound) { // If currently logged in user owns the course add course management buttons
+    if ((JSON.parse(authUser)[0].id === currentCourseOwner) && courseFound) { // If currently logged in user owns the course add course management buttons
       setManageCourse(
         <>
           <Link className="button" to={ `/courses/${id}/update` }>Update Course</Link>
@@ -55,7 +56,7 @@ const CourseDetail = () => {
         </>
       )
     }
-  }, [authUser, id, deleteCourse, courseFound]);
+  }, [authUser, id, deleteCourse, courseFound, currentCourseOwner]);
 
   useEffect(() => { // On page load get course
     (async () => {
@@ -64,6 +65,7 @@ const CourseDetail = () => {
       if (result.ok) {
         setCourseFound(true);
         let data = await result.json();
+        setCurrentCourseOwner(data.userId);
         loadCourse(
           (
             <form>

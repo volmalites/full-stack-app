@@ -19,6 +19,15 @@ const UserSignIn = () => {
       .then(user => {
         if (user === 500) {
           history.push('/error');
+        } else if (user.status === 401) {
+            setErrors((
+              <div className="validation--errors">
+                <h3>Authentication failed</h3>
+                  <ul>
+                    <li>{ user.message }</li>
+                  </ul>
+              </div>
+            ));
         } else {
           if (user === null) {
             setErrors((
@@ -34,14 +43,16 @@ const UserSignIn = () => {
           }
         }
       }).catch(error => {
-        setErrors((
-          <div className="validation--errors">
-            <h3>Errors</h3>
-              <ul>
-                <li>{ error.message }</li>
-              </ul>
-          </div>
-        ));
+        if (error) {
+          setErrors((
+            <div className="validation--errors">
+              <h3>Errors</h3>
+                <ul>
+                  <li>{ error.message }</li>
+                </ul>
+            </div>
+          ));
+        }
       });
   }
 
