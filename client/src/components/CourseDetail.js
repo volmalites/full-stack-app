@@ -90,7 +90,7 @@ const CourseDetail = () => {
           )
         );
       } else {
-        loadCourse(NotFound);
+        history.push('/notfound');
       }
     })();
     manageCourses();
