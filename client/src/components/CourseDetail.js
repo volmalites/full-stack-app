@@ -3,6 +3,11 @@ import { Main as Context } from '../Context';
 import { Link, useParams, useHistory, useLocation } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 
+/** 
+* This component will render a specific course to the DOM from the DB
+* The specified course will be a id parameter provided in the URL
+**/
+
 const CourseDetail = () => {
   const context = useContext(Context.Context)
   const history = useHistory();
@@ -66,7 +71,7 @@ const CourseDetail = () => {
         setCourseFound(true);
         let data = await result.json();
         setCurrentCourseOwner(data.userId);
-        loadCourse(
+        loadCourse( // For every course the current component will render
           (
             <form>
               <div className="main--flex">

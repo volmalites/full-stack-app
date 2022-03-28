@@ -2,6 +2,11 @@ import React, { useContext } from 'react';
 import { Main as Context } from '../Context';
 import { Link, useLocation } from 'react-router-dom';
 
+/** 
+* This is a stateless component that will render at the top of every page in the application
+* Handles user logged in and logged out states
+**/
+
 const Header = () => { // Always rendered to top of application
   const that = useContext(Context.Context);
   const authUser = (that.authenticatedUser) ? JSON.parse(that.authenticatedUser)[0] : false; // Logged in or not

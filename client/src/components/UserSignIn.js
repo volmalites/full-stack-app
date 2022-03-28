@@ -3,6 +3,10 @@ import { Main as Context } from '../Context';
 import { useHistory, useLocation } from "react-router-dom";
 import { Link } from 'react-router-dom';
 
+/** 
+* Handles user sign in through the global context functionality
+**/
+
 const UserSignIn = () => {
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
@@ -56,7 +60,7 @@ const UserSignIn = () => {
       });
   }
 
-  const cancel = e => {
+  const cancel = e => { // When user cancels the action and returns to home page
     e.preventDefault();
     history.push('/');
   }

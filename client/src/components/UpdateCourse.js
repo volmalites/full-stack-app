@@ -2,6 +2,10 @@ import React,{ useContext, useState, useEffect, useCallback, useRef } from 'reac
 import { Main as Context } from '../Context';
 import { useHistory, useParams, useLocation } from "react-router-dom";
 
+/**
+* Updates a specific course which is first loaded into the DOM from the id param provided
+**/
+
 const UpdateCourse = () => {
   const context = useContext(Context.Context)
   const authUser = JSON.parse(context.authenticatedUser)[0];

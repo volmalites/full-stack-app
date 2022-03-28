@@ -2,6 +2,10 @@ import React,{ useContext, useState, useEffect } from 'react';
 import { Main as Context } from '../Context';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
+/** 
+ * This component will render all courses to the DOM from the DB
+**/
+
 const Courses = () => {
   const context = useContext(Context.Context)
   const authUser = context.authenticatedUser;
@@ -15,7 +19,7 @@ const Courses = () => {
       if (result.status === 500) history.push('/error', { state: { from: location } });
       let data = await result.json();
       loadCourses(
-        data.map(item => (
+        data.map(item => ( // Loop over courses acquired from DB
           <Link key={item.id} to={'/courses/' + item.id} className="course--module course--link">
             <h2 className="course--label">{ item.title }</h2>
             <h3 className="course--title">{ (item.description.length > 100) ? item.description.substring(0, 100) + '...' : item.description }</h3>

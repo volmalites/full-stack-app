@@ -3,6 +3,10 @@ import { Main as Context } from '../Context';
 import { useHistory, useLocation } from "react-router-dom";
 import { Link } from 'react-router-dom';
 
+/** 
+* Handles user sign up, creating a new account through the global context functionality
+**/
+
 const UserSignUp = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
