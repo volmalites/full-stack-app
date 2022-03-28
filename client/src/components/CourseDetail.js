@@ -48,7 +48,7 @@ const CourseDetail = () => {
   }, [authUser, context.data, id, history, location]);
 
   const manageCourses = useCallback(() => { // Use callback in order to prevent infinite loops
-    if ((JSON.parse(authUser)[0].id === currentCourseOwner) && courseFound) { // If currently logged in user owns the course add course management buttons
+    if (authUser && (JSON.parse(authUser)[0].id === currentCourseOwner) && courseFound) { // If currently logged in user owns the course add course management buttons
       setManageCourse(
         <>
           <Link className="button" to={ `/courses/${id}/update` }>Update Course</Link>
