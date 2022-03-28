@@ -1,4 +1,4 @@
-import React,{ useContext, useState, useEffect, useCallback } from 'react';
+import React,{ useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { Main as Context } from '../Context';
 import { useHistory, useParams, useLocation } from "react-router-dom";
 
@@ -16,6 +16,7 @@ const UpdateCourse = () => {
   const { id } = useParams();
   const { NotFound } = require('../components/NotFound');
   const { Forbidden } = require('../components/Forbidden');
+  const cancelApi = useRef(false);
   const location = useLocation();
 
   const getCourse = useCallback(() => { // Use callback to prevent infinite loops, gets course to be updated
@@ -23,10 +24,10 @@ const UpdateCourse = () => {
       if (res.status === 500) history.push('/error', { state: { from: location } });
       return res.json();
     }).then(data => { 
-      setDenied(data.userId !== authUser.id);
       if (data.message) {
         setNoneFound(true);
       } else {
+        setDenied(data.userId !== authUser.id);
         setTitle(() => data.title);
         setDescription(() => data.description);
         setEstimatedTime(() => data.estimatedTime);
@@ -36,8 +37,10 @@ const UpdateCourse = () => {
   }, [authUser.encodedCredentials, id, context.data, authUser.id, history, location]);
 
   useEffect(() => {
-    getCourse();
-  }, [getCourse]);
+    if (!denied) getCourse();
+    if (denied) history.push('/forbidden', { state: {from: location } });
+    return () => { cancelApi.current = true };
+  }, [getCourse, denied, history, location]);
 
   const submit = e => { // Attempt to update course
     e.preventDefault();
@@ -48,7 +51,6 @@ const UpdateCourse = () => {
           return res.json();
         }
       }).then(response => {
-        console.log(response);
         if (response) {
           setErrors((
             <div className="validation--errors">
@@ -80,7 +82,7 @@ const UpdateCourse = () => {
     return (
       NotFound()
     )
-  } else if (denied) { // If the requested course was not found
+  } else if (denied) {
     return (
       Forbidden()
     )
